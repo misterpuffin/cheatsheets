@@ -1,0 +1,14 @@
+# Ignore everything
+*
+
+# Allow folders so files inside them can be included
+!*/
+
+# Allow these file types anywhere
+!*.tex
+!*.pdf
+!**/*.tex
+!**/*.pdf
+
+# Don't ignore this file
+!.gitignore

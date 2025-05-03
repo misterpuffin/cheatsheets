@@ -1,0 +1,239 @@
+\documentclass[landscape,8pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,enumitem}
+\usepackage{multicol}
+\usepackage{tcolorbox}
+\usepackage{mathtools}
+
+% Custom commands
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Pow}{\mathcal{P}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\ot}{\text{otp}}
+\renewcommand{\implies}{\Rightarrow}
+\renewcommand{\iff}{\Leftrightarrow}
+
+% Page setup
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5ex}
+\pagestyle{empty}
+
+\begin{document}
+\begin{multicols}{3}
+	\small
+
+	\section*{\centering Well-Ordered Sets (Ch. 9)}
+
+	\noindent\textbf{Definition.} A linear order $\langle X, < \rangle$ is a \textbf{well-order} if every non-empty subset of $X$ has a minimal element.
+
+	\noindent\textbf{Definition.} We say that a linear order $\langle X,  \triangleleft\rangle$ has \textit{type omega} if $X$ is infinite and for every $x \in X$, $\textrm{pred}_{\langle X, \triangleleft\rangle}(x)$ is finite.
+
+	\noindent\textbf{Fact 9.1} If $\langle X, <\rangle$ is a linear ordere of type omega, then $\langle X, <\rangle$ is a well-order.
+
+	\noindent\textbf{Lemma 9.2.} If $\langle X, < \rangle$ is a well-order and $A, B \subseteq X$ are downwards closed with $\langle A, < \rangle \cong \langle B, < \rangle$, then $A = B$.
+
+	\noindent\textbf{Corollary 9.3.} If $\langle X, < \rangle$ is a well-order with $x < x'$, then $\langle \text{pred}_{\langle X, < \rangle}(x'), < \rangle \not\cong \langle \text{pred}_{\langle X, < \rangle}(x), < \rangle$.
+
+	\noindent\textbf{Corollary 9.4.} If $\langle X, < \rangle$ is a well-order, then for any $x \in X$, $\langle \text{pred}_{\langle X, < \rangle}(x), < \rangle \not\cong \langle X, < \rangle$.
+
+	\noindent\textbf{Lemma 9.5.} If $\langle X, < \rangle$ and $\langle Y, \prec \rangle$ are isomorphic well-orders, then the isomorphism between them is unique.
+
+	\noindent\textbf{Theorem 9.6 (Fundamental Theorem of Well-Orders).} If $\langle X, < \rangle$ and $\langle Y, \prec \rangle$ are well-orders, then exactly one of the following holds:
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item $\langle X, < \rangle \cong \langle Y, \prec \rangle$
+		\item $\exists x \in X$ such that $\langle \text{pred}_{\langle X, < \rangle}(x), < \rangle \cong \langle Y, \prec \rangle$
+		\item $\exists y \in Y$ such that $\langle X, < \rangle \cong \langle \text{pred}_{\langle Y, \prec \rangle}(y), \prec \rangle$
+	\end{enumerate}
+
+	\section*{\centering Ordinals (Ch. 10)}
+
+	\noindent\textbf{Definition 10.1} A set $\alpha$ is an \textbf{ordinal} if it is transitive and well-ordered by $\in$.
+
+	\noindent\textbf{Fact 10.3} $\mathbb{N}$ is an ordinal. Every $n \in \mathbb{N}$ is also an ordinal.
+
+	\noindent\textbf{Theorem 10.4.} For ordinal $x$:
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item $\forall y \in x[y \text{ is an ordinal } \wedge y = \text{pred}_{\langle x, \in \rangle}(y)]$
+		\item If $y$ is an ordinal and $\langle x, \in \rangle \cong \langle y, \in \rangle$, then $x = y$
+		\item If $y$ is an ordinal, exactly one holds: $x \in y$, $x = y$, or $y \in x$
+		\item If $y, z$ are ordinals, $x \in y$, and $y \in z$, then $x \in z$
+		\item If $C \neq \emptyset$ is a class of ordinals, then $\exists y \in C \forall z \in C[y \in z \vee y = z]$
+	\end{enumerate}
+
+	\noindent\textbf{Definition 10.5} \textbf{ORD} dneotes the class of all ordinals.
+
+	\noindent\textbf{Theorem 10.6 (Burali-Forti).} $\text{ORD}$ is not a set.
+
+	\noindent\textbf{Lemma 10.7.} Every transitive set of ordinals is an ordinal.
+
+	\noindent\textbf{Theorem 10.8.} For any well-ordered set $\langle X, < \rangle$, there exists a unique ordinal $\alpha$ such that $\langle X, < \rangle \cong \langle \alpha, \in_\alpha \rangle$.
+
+	\noindent\textbf{Definition 10.11} For any well-ordered set $\langle X, < \rangle$, $\ot(\langle X, < \rangle)$ is the unique ordinal $\alpha$ such that $\langle X, < \rangle \cong \langle \alpha, \in_\alpha \rangle$.
+
+	\noindent\textbf{Lemma 10.13.} For ordinals $\alpha, \beta$: $\alpha \leq \beta \iff \alpha \subseteq \beta$.
+
+	\noindent\textbf{Lemma 10.14.} For a non-empty set of ordinals $A$, $\min(A) = \bigcap A$. For any set of ordinals $A$, $\sup_{\text{ORD}}(A) = \bigcup A$.
+
+	\noindent\textbf{Lemma 10.15.} For any $\alpha$, $S(\alpha)$ is an ordinal, $\alpha < S(\alpha)$, and $\forall \beta[\beta < S(\alpha) \iff \beta \leq \alpha]$.
+
+	\noindent\textbf{Definition 10.16.} $\alpha$ is a \textbf{successor ordinal} if $\exists \beta[\alpha = S(\beta)]$. $\alpha$ is a \textbf{limit ordinal} if $\alpha \neq 0$ and $\alpha$ is not a successor.
+
+	\noindent\textbf{Lemma 10.17.} An ordinal $\alpha$ is a natural number iff $\forall\beta\leq\alpha[\beta = 0 \lor \beta \textrm{ is a successor ordinal}]$.
+
+	\noindent\textbf{Convention 10.18} $\omega$ denotes the set of natural numbers: $\omega = \mathbb{N}$.
+
+	\noindent\textbf{Theorem 10.19 (Transfinite Induction).} If $\forall \alpha \in \text{ORD}[\forall \beta < \alpha[P(\beta)] \implies P(\alpha)]$, then $\forall \alpha \in \text{ORD}[P(\alpha)]$.
+
+	\noindent\textbf{Definition 10.20} Let \textbf{FOD} denote the class of all functions whose domain is some ordinal. \textbf{FOD} = $\{\sigma :\sigma \textrm{ is a function} \land \exists\alpha\in\textbf{ORD}[\textrm{dom}(\sigma)=\alpha]\}$.
+
+	\noindent\textbf{Theorem 10.21 (Transfinite Recursion).} For any extender $\textbf{E}: \textbf{FOD} \to \textbf{V}$, there exists a unique function $\textbf{F}: \textbf{ORD} \to \textbf{V}$ satisfying $\forall \alpha \in \textbf{ORD}[\textbf{F}(\alpha) = \textbf{E}(\textbf{F}\restriction\alpha)]$.
+
+	\section*{\centering Ordinal Arithmetic (Ch. 11)}
+
+	\noindent\textbf{Defintion 11.1.} Let $\langle X, <_X \rangle$ and $\langle Y, <_Y \rangle$ be well-orders. Define $X \oplus Y$ to be the set $(\{0\} \times X) \cup (\{1\} \times Y)$. Define $<_{X \oplus Y}$ on $X \oplus Y$ by the following clauses:
+	\begin{enumerate}
+		\item $\forall x, x' \in X \, [\langle 0, x \rangle <_{X \oplus Y} \langle 0, x' \rangle \Leftrightarrow x <_X x']$;
+		\item $\forall y, y' \in Y \, [\langle 1, y \rangle <_{X \oplus Y} \langle 1, y' \rangle \Leftrightarrow y <_Y y']$;
+		\item $\forall x \in X \, \forall y \in Y \, [\langle 0, x \rangle <_{X \oplus Y} \langle 1, y \rangle]$.
+	\end{enumerate}
+	\noindent\textbf{Definition 11.2. (Ordinal Addition).} For ordinals $\alpha, \beta$, $\alpha + \beta = \ot(\langle \alpha \oplus \beta, <_{\alpha \oplus \beta} \rangle)$.
+
+	\noindent\textbf{Lemma 11.4} Let $\langle X, <_X \rangle$, $\langle Y, <_Y \rangle$, $\langle Z, <_Z \rangle$ be well-orders. Suppose that $A, B \subseteq Z$. Assume that $A \cup B = Z$ and that $\forall a \in A \, \forall b \in B \, [a <_Z b]$. Then if $\langle A, <_Z \rangle$ is isomorphic to $\langle X, <_X \rangle$ and $\langle B, <_Z \rangle$ is isomorphic to $\langle Y, <_Y \rangle$, then $\langle Z, <_Z \rangle$ is isomorphic to $\langle X \oplus Y, <_{X \oplus Y} \rangle$.
+
+	\noindent\textbf{Lemma 11.5.} For ordinals $\alpha, \beta, \gamma$:
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item $\alpha + (\beta + \gamma) = (\alpha + \beta) + \gamma$
+		\item $\alpha + 0 = \alpha$
+		\item $\alpha + 1 = S(\alpha)$
+		\item $\alpha + S(\beta) = S(\alpha + \beta)$
+		\item If $\beta$ is a limit ordinal, $\alpha + \beta = \sup\{\alpha + \xi : \xi < \beta\}$
+	\end{enumerate}
+
+	\noindent\textbf{Definition (Ordinal Multiplication).} For ordinals $\alpha, \beta$, $\alpha \cdot \beta = \ot(\langle \beta \times \alpha, <_{\alpha \cdot \beta} \rangle)$ where $<_{\alpha \cdot \beta}$ is the dictionary order.
+
+	\noindent\textbf{Lemma 11.8.} Suppose $\alpha$, $\beta$, $\gamma$ are ordinals. Suppose $A \subseteq \gamma$ and that $\langle A, \in \rangle$ is isomorphic to $\langle \beta, \in \rangle$. Then $\langle A \times \alpha, <_{\alpha \cdot \gamma} \rangle$ is isomorphic to $\langle \beta \times \alpha, <_{\alpha \cdot \beta} \rangle$.
+
+	\noindent\textbf{Lemma 11.9.} For ordinals $\alpha, \beta, \gamma$:
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item $\alpha \cdot (\beta \cdot \gamma) = (\alpha \cdot \beta) \cdot \gamma$
+		\item $\alpha \cdot 0 = 0$
+		\item $\alpha \cdot 1 = \alpha$
+		\item $\alpha \cdot S(\beta) = \alpha \cdot \beta + \alpha$
+		\item If $\beta$ is a limit ordinal, $\alpha \cdot \beta = \sup\{\alpha \cdot \xi : \xi < \beta\}$
+		\item $\alpha \cdot (\beta + \gamma) = \alpha \cdot \beta + \alpha \cdot \gamma$
+	\end{enumerate}
+
+	\noindent\textbf{Definition (Ordinal Exponentiation).} For fixed $\alpha$, define $\alpha^\beta$ by recursion:
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item If $\alpha = 0$, then $\alpha^0 = 0$; if $\alpha > 0$, then $\alpha^0 = 1$
+		\item $\alpha^{\beta+1} = \alpha^\beta \cdot \alpha$
+		\item If $\beta$ is a limit ordinal, then $\alpha^\beta = \sup\{\alpha^\xi : \xi < \beta\}$
+	\end{enumerate}
+
+	\noindent\textbf{Properties:}
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item $\alpha^{\beta+\gamma} = \alpha^\beta \cdot \alpha^\gamma$ for $\alpha > 0$
+		\item For any $\alpha > 0$, $\alpha \cdot \omega > \alpha$
+		\item $\alpha < \beta \implies \gamma + \alpha < \gamma + \beta$ and $\alpha + \gamma \leq \beta + \gamma$
+		\item If $\alpha \geq \omega$ is an ordinal, then $1 + \alpha = \alpha$
+		\item If $\gamma > 0$, then $\alpha < \beta \implies \gamma \cdot \alpha < \gamma \cdot \beta$ and $\alpha \cdot \gamma \leq \beta \cdot \gamma$
+	\end{enumerate}
+
+	\section*{\centering Cardinals and Cardinal Arithmetic (Ch. 12)}
+
+	\noindent\textbf{Definition.} A set $X$ is \textbf{well-orderable} if there exists a relation $< \subseteq X \times X$ such that $\langle X, < \rangle$ is a well-order.
+
+	\noindent\textbf{Definition.} For a well-orderable set $X$, the \textbf{cardinality} of $X$, written $|X|$, is the minimal ordinal $\alpha$ such that $\alpha \approx X$.
+
+	\noindent\textbf{Definition.} $\alpha$ is a \textbf{cardinal} if $|\alpha| = \alpha$.
+
+	\noindent\textbf{Lemma 12.5.} If $|\alpha| \leq \beta \leq \alpha$, then $|\beta| = |\alpha|$.
+
+	\noindent\textbf{Lemma 12.6.} A set is finite iff $|X| < \omega$. A set is countable iff $|X| \leq \omega$.
+
+	\noindent\textbf{Definition.} For cardinals $\kappa$ and $\lambda$:
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item $\kappa \oplus \lambda = |(\{0\} \times \kappa) \cup (\{1\} \times \lambda)|$
+		\item $\kappa \otimes \lambda = |\kappa \times \lambda|$
+	\end{enumerate}
+
+	\noindent\textbf{Lemma 12.8.} Every infinite cardinal is a limit ordinal.
+
+	\noindent\textbf{Theorem 12.9 (Fundamental Theorem of Cardinal Arithmetic).} If $\kappa$ is an infinite cardinal, then $\kappa \otimes \kappa = \kappa$.
+
+	\noindent\textbf{Corollary 12.10.} For infinite cardinals $\kappa, \lambda$: $\kappa \oplus \lambda = \kappa \otimes \lambda = \max\{\kappa, \lambda\}$.
+
+	\noindent\textbf{Theorem 12.11.} For every set $X$ there is a cardinal $\alpha$ such that there is no 1-1 function $f: \alpha \to X$.
+
+	\noindent\textbf{Corollary 12.13.} For every $\beta \in \text{ORD}$, there exists a cardinal $\alpha > \beta$.
+
+	\noindent\textbf{Lemma 12.15.} Let $A$ be a set of cardinals. Then $\bigcup A$ is a cardinal.
+
+	\noindent\textbf{Definition.} For each $\alpha \in \text{ORD}$, $\alpha^+$ is the least cardinal strictly greater than $\alpha$.
+
+	\noindent\textbf{Lemma 12.17.} Suppose $\textbf{F} : \textbf{ORD} \to \textbf{ORD}$ is a function such that $\forall \alpha, \beta \in \textbf{ORD} [\alpha < \beta \Rightarrow \textbf{F}(\alpha) < \textbf{F}(\beta)]$. Then $\forall \beta \in \textbf{ORD} [\beta \leq \mathbf{F}(\beta)]$.
+
+	\noindent\textbf{Definition.} Define $\langle \omega_\alpha : \alpha \in \text{ORD} \rangle$ by:
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item $\omega_0 = \omega$
+		\item $\omega_{S(\alpha)} = \omega_\alpha^+$
+		\item If $\alpha$ is a limit ordinal, then $\omega_\alpha = \sup\{\omega_\xi : \xi < \alpha\}$
+	\end{enumerate}
+
+	\noindent\textbf{Definition.} $\aleph_\alpha$ denotes $\omega_\alpha$.
+
+	\noindent\textbf{Lemma 12.20.}
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item $\alpha < \beta \implies \aleph_\alpha < \aleph_\beta$
+		\item Every infinite cardinal equals $\aleph_\alpha$ for some $\alpha \in \text{ORD}$
+	\end{enumerate}
+
+	\noindent\textbf{Definition.} Let $X$ be any set. We say that $F$ is a choice function on $X$ if $F$ is a function, $\operatorname{dom}(F) = X \setminus \{\emptyset\}$, and $\forall a \in X \setminus \{\emptyset\} \, [F(a) \in a]$.
+
+	\noindent\textbf{Theorem 12.22 (Zomelo)} The following are equivalent for a set $X$:
+	\begin{enumerate}
+		\item $X$ is well-orderable;
+		\item there exists a choice function on $\mathcal{P}(X)$.
+	\end{enumerate}
+
+	\noindent\textbf{Theorem 12.26 (Equivalent Forms of AC).} The following are equivalent:
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item Cartesian product of non-empty sets is non-empty
+		\item Every set has a choice function
+		\item Every set is well-orderable
+		\item For any two sets $X, Y$, either $X \preceq Y$ or $Y \preceq X$
+		\item For every set $X$, there is an ordinal $\alpha$ and a 1-1 function $f: X \to \alpha$
+		\item For every set $X$, there is a cardinal $\kappa$ such that $X \approx \kappa$
+	\end{enumerate}
+
+	\noindent\textbf{Definition (Cardinal Exponentiation).} $\kappa^\lambda = |\{f : f \text{ is a function} \wedge \text{dom}(f) = \lambda \wedge \text{ran}(f) \subseteq \kappa\}|$.
+
+	\noindent\textbf{Lemma 12.30.} For cardinals $\kappa, \lambda, \theta$:
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item $\left(\kappa^\lambda\right)^\theta = \kappa^{(\lambda \otimes \theta)}$
+		\item $\kappa^\lambda \otimes \kappa^\theta = \kappa^{(\lambda \oplus \theta)}$
+	\end{enumerate}
+
+	\noindent\textbf{Definition.} Define $\langle \beth_\alpha : \alpha \in \text{ORD} \rangle$ by:
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item $\beth_0 = \omega$
+		\item $\beth_{S(\alpha)} = 2^{\beth_\alpha}$
+		\item If $\alpha$ is a limit ordinal, then $\beth_\alpha = \sup\{\beth_\xi : \xi < \alpha\}$
+	\end{enumerate}
+
+	\noindent\textbf{Definition.} The Generalized Continuum Hypothesis (GCH) states that $\forall \alpha \in \text{ORD}[\beth_\alpha = \aleph_\alpha]$. The Continuum Hypothesis (CH) states that $\beth_1 = \aleph_1$.
+
+	\section*{\centering From Chapter 13}
+
+	\noindent\textbf{Theorem 13.3.} The following are equivalent:
+	\begin{enumerate}[noitemsep,topsep=0pt]
+		\item AC
+		\item For any set $A$ and $F \subseteq \Pow(A)$, if $F$ has finite character, then for every $X \in F$, there exists $Y \in F$ such that $X \subseteq Y$ and $Y$ is maximal in $\langle F, \subset \rangle$ (Teichmüller-Tukey lemma)
+		\item Every chain in every partial order is contained in a maximal chain (Hausdorff's maximal chain theorem)
+		\item If $\langle X, < \rangle$ is any partial order where every chain has an upper bound, then $\langle X, < \rangle$ has a maximal element (Zorn's lemma)
+	\end{enumerate}
+
+\end{multicols}
+\end{document}

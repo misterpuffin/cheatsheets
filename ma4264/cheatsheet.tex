@@ -1,0 +1,316 @@
+\documentclass[a4paper,landscape,8pt]{article}
+
+% Packages
+\usepackage[landscape,margin=0.5cm]{geometry}
+\usepackage{multicol}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{bm}
+
+% Custom settings
+\setlength{\columnsep}{0.5cm}
+\setlength{\columnseprule}{0.2pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1pt}
+\pagestyle{empty}
+
+% Define colors
+\definecolor{heading}{RGB}{0,51,102}
+\definecolor{subheading}{RGB}{0,90,120}
+\definecolor{example}{RGB}{100,0,0}
+
+% Custom environments and commands
+\newcommand{\heading}[1]{\noindent\textbf{\textcolor{heading}{\large #1}}\\\rule{\linewidth}{1pt}}
+\newcommand{\subheading}[1]{\vspace{1pt}\noindent\textbf{\textcolor{subheading}{#1}}}
+\newcommand{\definition}[2][]{\vspace{1pt}\noindent%
+  \ifx\relax#1\relax%
+    #2%
+  \else%
+    \textbf{#1 :} #2%
+  \fi}
+\newcommand{\theorem}[2]{\vspace{1pt}\noindent\textbf{Theorem (#1):} #2}
+\newcommand{\example}[1]{\vspace{1pt}\noindent\textit{\textcolor{example}{Example:} #1}}
+
+\newcommand{\gameMatrix}[1]{
+  \left(\begin{array}{cc}
+    #1
+  \end{array}\right)
+}
+
+\begin{document}
+
+\begin{multicols}{3}
+
+	% CHAPTER 1: STATIC GAMES OF COMPLETE INFORMATION
+	\heading{1. Static Games of Complete Information}
+
+	\subheading{Normal-Form Game Representation}\\
+	\definition{}{The normal-form (strategic-form) representation of an $n$-player game specifies the strategy spaces $S_i$ and payoff functions $u_i$, denoted as $G = \{S_1, \ldots, S_n; u_1, \ldots, u_n\}$}
+
+	\subheading{Dominant Strategies}\\
+	\definition{In game $G$, strategy $s_i'$ \textit{strictly dominates} strategy $s_i''$ if:
+		\begin{equation*}
+			u_i(s_i', s_{-i}) > u_i(s_i'', s_{-i}), \quad \forall s_{-i} \in S_{-i}
+		\end{equation*}}
+
+
+	\subheading{Nash Equilibrium}\\
+	\definition[Best Response]{The best response for player $i$ to strategies $s_{-i}$ is:
+		\begin{equation*}
+			R_i(s_{-i}) = \arg\max_{s_i \in S_i} u_i(s_i, s_{-i})
+		\end{equation*}}
+
+	\definition[Nash equilibrium]{Strategies $(s_1^*, \ldots, s_n^*)$ form a Nash equilibrium if:
+		\begin{equation*}
+			s_i^* \in R_i(s_{-i}^*), \quad \forall i = 1, \ldots, n
+		\end{equation*}
+		Equivalently: $u_i(s_i^*, s_{-i}^*) = \max_{s_i \in S_i} u_i(s_i, s_{-i}^*)$}
+
+
+	\subheading{Mixed Strategies}\\
+	\definition{A mixed strategy for player $i$ is a probability distribution $p_i = (p_{i1}, \ldots, p_{iK})$ over pure strategies, where $\sum_k p_{ik} = 1$ and $p_{ik} \geq 0$}
+
+	\definition[Expected Payoff]{For a 2-player game:
+		\begin{align*}
+			v_1(p_1, p_2) & = \sum_{j=1}^J\sum_{k=1}^K p_{1j}p_{2k}u_1(s_{1j}, s_{2k}) \\
+			v_2(p_1, p_2) & = \sum_{j=1}^J\sum_{k=1}^K p_{1j}p_{2k}u_2(s_{1j}, s_{2k})
+		\end{align*}}
+
+	\definition{Mixed strategies $(p_1^*, p_2^*)$ form a Nash equilibrium if:
+		\begin{align*}
+			v_1(p_1^*, p_2^*) & \geq v_1(p_1, p_2^*) \\
+			v_2(p_1^*, p_2^*) & \geq v_2(p_1^*, p_2)
+		\end{align*}
+		for all probability distributions $p_1$ and $p_2$}
+
+	\theorem{Nash (1950)}{In any finite $n$-player normal-form game, there exists at least one Nash equilibrium, possibly involving mixed strategies.}
+
+	% CONTENT FOR COLUMN 2 WILL GO HERE (Chapter 2, etc.)
+	% CHAPTER 2: DYNAMIC GAMES OF COMPLETE INFORMATION
+	\heading{2. Dynamic Games of Complete Information}
+
+	\subheading{Dynamic Games}\\
+	\definition{A dynamic game of complete and perfect information is a game where:
+		\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+			\item Players move in sequence
+			\item Perfect information: all previous moves are observed before next move is chosen
+			\item Complete information: payoffs are common knowledge
+		\end{itemize}
+		Such games can be represented by a game tree.}
+
+	\subheading{Backwards Induction}
+	\definition{
+		\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+			\item At the second stage, player 2 observes $a_1$ and solves $\max_{a_2 \in A_2} u_2(a_1, a_2)$
+			\item The solution is player 2's best response $R_2(a_1)$
+			\item Knowing this, player 1 solves $\max_{a_1 \in A_1} u_1(a_1, R_2(a_1))$
+			\item The solution $a^*_1$ and $R_2(a^*_1)$ is the backwards-induction outcome
+		\end{itemize}}
+
+	\subheading{Extensive-Form Games and Strategies}\\
+	\definition{The extensive-form representation of a game specifies:
+		\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+			\item The players in the game
+			\item When each player has the move, what each player can do, and what each player knows when moving
+			\item The payoffs received for each combination of moves
+		\end{itemize}}
+
+	\definition[Information Set]{A collection of decision nodes satisfying:
+		\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+			\item The player needs to move at every node in the set
+			\item When play reaches a node in the set, the player does not know which node in the set has been reached
+			\item The player must have the same actions available at each node in the set
+		\end{itemize}}
+
+	\definition[Strategy]{A complete plan of action specifying a feasible action for the player in every contingency where the player might be called on to act.}
+
+
+	\subheading{Subgame-Perfect Nash Equilibrium}
+
+	\definition[Subgame]{A portion of a game that:
+		\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+			\item Begins at a decision node that is a singleton information set
+			\item Includes all nodes following it in the game tree
+			\item Does not cut any information sets
+		\end{itemize}}
+
+	\definition{A Nash equilibrium is \textbf{subgame-perfect} if the players' strategies constitute a Nash equilibrium in every subgame.}
+
+	% CONTENT FOR COLUMN 3 WILL GO HERE (Chapter 3, etc.)
+	% CHAPTER 3: STATIC GAMES OF INCOMPLETE INFORMATION
+	\heading{3. Static Games of Incomplete Information}
+
+	\subheading{Bayesian Games}
+	\definition{Games of incomplete information are also called Bayesian games. In a game of incomplete information, at least one player is uncertain about another player's payoff function.}
+
+	\subheading{Static Bayesian Games and Bayesian Nash Equilibrium} \\
+	\definition{The normal-form representation of an $n$-player static Bayesian game specifies:
+	\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+		\item The players' action spaces $A_1, \ldots A_n$,
+		\item Their type spaces $T_1, \ldots, T_n$,
+		\item Their beliefs $P_1, \ldots, P_n$, and
+		\item Their payoff functions $u_1, \ldots, u_n$.
+	\end{itemize}
+	\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+		\item Moreover, Player $i$'s type, $t_i \in T_i$, is privately known by player $i$, and determines player $i$'s payoff function, $u_i(a_1, \ldots, a_n; t_i)$.}
+		\item Player $i$'s belief $P_i(t_{-i}|t_i)$ describes $i$'s uncertainty about the $n - 1$ other players' possible types, $t_{-i}$, given $i$'s own type, $t_i$.
+	\end{itemize}
+
+	\definition[Strategy]{In the static Bayesian game, a strategy for player $i$ is a function $s_i: T_i \rightarrow A_i$.
+		\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+			\item For given type $t_i$, $s_i(t_i)$ gives the action.
+			\item Player $i$'s strategy space $S_i$ is the set of all functions from $T_i$ into $A_i$.
+		\end{itemize}}
+
+	\definition{In the static Bayesian game, the strategies $s^* = (s_1^*, \ldots, s_n^*)$ are a (pure-strategy) \textbf{Bayesian Nash equilibrium} if for each player $i$ and for each of $i$'s type $t_i$ in $T_i$, $s_i^*(t_i)$ solves
+		\begin{equation*}
+			\max_{a_i \in A_i} E_{t_{-i}}u_i(a_i, s_{-i}^*(t_{-i}); t_i),
+		\end{equation*}
+		where
+		\begin{equation*}
+			E_{t_{-i}} u_i(a_i, s_{-i}^*(t_{-i}); t_i) = \sum_{t_{-i} \in T_{-i}} P_i(t_{-i}|t_i)u_i(a_i, s_{-i}^*(t_{-i}); t_i).
+		\end{equation*}}
+
+	\theorem{Proposition 1}{Let $(s_1^*, \ldots, s_n^*)$ be strategies in a static Bayesian game. If for any $t_i \in T_i$, $a_i \in A_i$ and $a_{-i} \in A_{-i}$,
+		\begin{equation*}
+			u_i(s_i^*(t_i), a_{-i}; t_i) \geq u_i(a_i, a_{-i}; t_i),
+		\end{equation*}
+		(i.e., $s_i^*(t_i)$ weakly dominates every $a_i \in A_i$), then $(s_1^*, \ldots, s_n^*)$ is a Bayesian Nash equilibrium.}
+
+	% CONTENT FOR COLUMN 4 WILL GO HERE (Chapter 4, etc.)
+	\heading{4. Dynamic Games of Incomplete Info}
+
+	\subheading{Perfect Bayesian Equilibrium}
+
+	\definition{A \textbf{Perfect Bayesian Equilibrium} consists of strategies and beliefs satisfying:
+		\begin{enumerate}
+			\item \textbf{Sequential Rationality}: Given their beliefs, players' strategies must be sequentially rational.
+			      \begin{itemize}
+				      \item At each information set, the action and subsequent strategy of the player must be optimal, given the player's belief and other players' subsequent strategies.
+			      \end{itemize}
+			\item \textbf{Consistency}: At every information set, beliefs are determined by Bayes' rule and players' strategies, whenever possible.
+		\end{enumerate}
+	}
+
+	\textbf{Remark:} The strategy profile in any perfect Bayesian equilibrium is a Nash equilibrium.
+
+	\subheading{Signaling Games}
+
+	\textbf{Pooling vs. Separating:}
+	\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+		\item \textbf{Pooling}: Each type sends the same message
+		\item \textbf{Separating}: Each type sends a different message
+		\item \textbf{Semi-separating/Partial pooling}
+	\end{itemize}
+
+	\definition{A \textbf{pure-strategy perfect Bayesian equilibrium} in a signaling game consisting of Sender's strategy $m^*(t_i)$, Receiver's strategy $a^*(m_j)$, Belief $\mu(t_i|m_j)$ satisfying:
+		\begin{enumerate}[leftmargin=10pt, itemsep=0pt]
+			\item \textbf{Sequential rationality}:
+			      \begin{itemize}[leftmargin=10pt,itemsep=0pt]
+				      \item For each $m_j \in M$, $a^*(m_j)$ maximizes the Receiver's expected utility:
+				            \[a^*(m_j) = \arg\max_{a_k \in A} \sum_{t_i \in T} \mu(t_i|m_j)U_R(t_i, m_j, a_k)\]
+				      \item For each $t_i \in T$, $m^*(t_i)$ maximizes the Sender's utility:
+				            \[m^*(t_i) = \arg\max_{m_j \in M} U_S(t_i, m_j, a^*(m_j))\]
+			      \end{itemize}
+			\item \textbf{Consistency}: Given Sender's strategy $m^*$, for each $m_j$ with $T_j = \{t_i \in T : m^*(t_i) = m_j\} \neq \emptyset$:
+			      \[\mu(t_i|m_j) = \frac{P(t_i)}{\sum_{t \in T_j}P(t)} \textrm{ for all } t_i \in T_j\]
+		\end{enumerate}
+	}
+
+
+	% CONTENT FOR COLUMN 5 WILL GO HERE (Chapter 5, etc.)
+	% CHAPTER 5: COOPERATIVE GAMES
+	\heading{5. Cooperative Games}
+
+	\subheading{Two-Person Cooperative Games}\\
+	\definition{A pair $\Gamma = (H, d)$ where:
+		\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+			\item $H \subset \mathbb{R}^2$ is compact and convex
+			\item $d \in H$ is the threat point (payoffs if no agreement)
+			\item $H$ contains at least one element, $u$, such that $u \gg d$
+		\end{itemize}}
+
+	\definition[Pareto optimality]{Payoff pairs which are not dominated by any other pair are said to be Pareto optimal. Pair $(u, v)$ dominates $(u', v')$ if $u \geq u'$ and $v \geq v'$.}
+
+	\definition[Nash bargaining solution]{A mapping $f : W \rightarrow \mathbb{R}^2$ that associates a unique element $f(H, d) = (f_1(H, d), f_2(H, d))$ with the game $(H, d) \in W$, satisfying:
+		\begin{enumerate}[leftmargin=10pt,itemsep=0pt]
+			\item \textbf{Feasibility}: $f(H, d) \in H$
+			\item \textbf{Individual rationality}: $f(H, d) \geq d$
+			\item \textbf{Pareto optimality}: $f(H, d)$ is Pareto optimal
+			\item \textbf{Invariance under linear transformations}: If a game is transformed by affine functions, the solution transforms accordingly
+			\item \textbf{Symmetry}: If $(H, d)$ is symmetric, then $f_1(H, d) = f_2(H, d)$
+			\item \textbf{Independence of irrelevant alternatives}: If $(H, d),(H', d') \in W$, $d = d'$, $H \subset H'$, and $f(H', d') \in H$, then $f(H, d) = f(H', d')$
+		\end{enumerate}}
+
+	\theorem{Theorem 1}{A game $(H, d) \in W$ has a unique Nash solution $u^* = f(H, d)$ satisfying the above conditions if and only if $(u^*_1 - d_1)(u^*_2 - d_2) > (u_1 - d_1)(u_2 - d_2)$ for all $u \in H$, $u \geq d$, and $u \neq u^*$.}
+
+	\subheading{n-person Cooperative Games}\\
+	\definition{For an $n$-person game with players $N = \{1, 2, \ldots, n\}$, the \textbf{characteristic function} $v$ gives each coalition $S \subseteq N$ the amount $v(S)$ that coalition $S$ can be sure of receiving. Game denoted as $\Gamma = (N, v)$.}
+
+	\definition[Assumption]{The characteristic function $v$ satisfies:
+		\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+			\item $v(\emptyset) = 0$
+			\item For any disjoint coalitions $K$ and $L$ contained in $N$, $v(K \cup L) \geq v(K) + v(L)$ (super-additivity)
+		\end{itemize}}
+
+	\definition[Imputation]{A payoff vector $x = (x_1, \ldots, x_n)$ satisfying:
+		\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+			\item $\sum_{i=1}^n x_i = v(N)$ (group rationality)
+			\item $x_i \geq v(\{i\})$ for all $i \in N$ (individual rationality)
+		\end{itemize}
+		$I(N, v)$ denotes the set of all imputations.}
+
+	\definition[Domination]{Let $x, y \in I(N, v)$, and $S$ be a coalition. We say $x$ dominates $y$ via $S$ (notation $x \succ_S y$) if:
+		\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+			\item $x_i > y_i$ for all $i \in S$
+			\item $\sum_{i \in S} x_i \leq v(S)$
+		\end{itemize}
+		We say $x$ dominates $y$ (notation $x \succ y$) if there is any coalition $S$ such that $x \succ_S y$.}
+
+	\definition[Core]{The set of all undominated imputations for a game $(N, v)$ is called the core, denoted by $C(N, v)$.}
+
+	\theorem{Theorem 2}{The core of a game $(N, v)$ is the set of all $n$-vectors, $x$, satisfying:
+		\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+			\item $\sum_{i \in S} x_i \geq v(S)$ for all $\emptyset \neq S \subset N$
+			\item $\sum_{i \in N} x_i = v(N)$
+		\end{itemize}}
+
+	\subheading{Special Games}\\
+	\definition[Constant-sum game]{A game $(N, v)$ is constant-sum if for all $S \subset N$, $v(S) + v(N - S) = v(N)$.}
+
+	\definition[Essential game]{A game $(N, v)$ is essential if $v(N) > \sum_{i \in N} v(\{i\})$. It is inessential otherwise.}
+
+	\theorem{Theorem 3}{If $(N, v)$ is an inessential game, then for any coalition $S$, $v(S) = \sum_{i \in S} v(\{i\})$.}
+
+	\theorem{Theorem 4}{If a game $(N, v)$ is constant-sum, then its core is either empty or a singleton $\{v(\{1\}), \ldots, v(\{n\})\}$.}
+
+	\subheading{Strategical Equivalence}\\
+	\definition[Strategical equivalence]{Two games $v$ and $u$ are strategically equivalent if there exist constants $a > 0$ and $c_1, \ldots, c_n$, such that for every coalition $S$, $u(S) = av(S) + \sum_{i \in S} c_i$.}
+
+	\definition[Reduced form]{A characteristic function $v$ is in $(0, 1)$-reduced form if $v(\{i\}) = 0$ for all $i \in N$ and $v(N) = 1$.}
+
+	\subheading{The Shapley Value}\\
+	\definition[Shapley value]{Given any $n$-person game $(N, v)$, the Shapley value is an $n$-vector, denoted by $\phi(v)$, where the $i$-th component is:
+		\begin{equation*}
+			\phi_i(v) = \sum_{S \subseteq N \setminus \{i\}} \frac{s!(n-s-1)!}{n!}[v(S \cup \{i\}) - v(S)]
+		\end{equation*}
+		where $s = |S|$.}
+
+	\definition[Properties of Shapley value]{The Shapley value has the following properties:
+		\begin{itemize}[leftmargin=10pt,itemsep=0pt]
+			\item \textbf{Individual rationality}: $\phi_i(v) \geq v(\{i\})$ for every $i \in N$
+			\item \textbf{Efficiency}: $\sum_{i \in N} \phi_i(v) = v(N)$
+			\item \textbf{Symmetry}: If $v(S \cup \{i\}) = v(S \cup \{j\})$ for every coalition $S$ not containing $i$ and $j$, then $\phi_i(v) = \phi_j(v)$
+			\item \textbf{Additivity}: If $v$ and $w$ are characteristic functions, then $\phi(v + w) = \phi(v) + \phi(w)$
+			\item \textbf{Dummy}: If a player $i$ is such that $v(S \cup \{i\}) = v(S)$ for every $S$ not containing $i$, then $\phi_i(v) = 0$
+		\end{itemize}}
+\end{multicols}
+
+
+\end{document}

@@ -1,0 +1,369 @@
+\documentclass[8,a4paper]{article}
+\usepackage[margin=0.3in,landscape]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{mathtools}
+\usepackage{thmtools}
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+\titleformat{\section}{\large\bfseries\color{blue}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{blue!70!black}}{\thesubsection}{1em}{}
+
+\titlespacing*{\section}{0pt}{2pt}{2pt}
+\titlespacing*{\subsection}{0pt}{1pt}{1pt}
+
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ud}{\,\mathrm{d}}
+\newcommand{\QR}{\text{QR}}
+\newcommand{\NQR}{\text{NQR}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\ord}{\text{ord}}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+
+\setlist[itemize]{nosep, topsep=0pt, partopsep=0pt, parsep=0pt, itemsep=0pt}
+\setlist[enumerate]{nosep, topsep=0pt, partopsep=0pt, parsep=0pt, itemsep=0pt}
+\setlength{\columnsep}{12pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+
+\begin{center}
+	\Large\textbf{MA3265 Number Theory Cheatsheet}
+\end{center}
+
+\begin{multicols}{3}
+
+	\section{Primes and Basic Modular Arithmetic}
+	\subsection{Complete and Reduced Residue Systems}
+	\begin{itemize}[leftmargin=*]
+		\item If $\{r_1, r_2, \ldots, r_n\}$ is a CRS modulo $n$ and $\gcd(a,n) = 1$, then $\{ar_1 + b, ar_2 + b, \ldots, ar_n + b\}$ is also a CRS modulo $n$ for any integer $b$
+		\item If $\{r_1, r_2, \ldots, r_{\phi(n)}\}$ is a RRS modulo $n$ and $\gcd(a,n) = 1$, then $\{ar_1, ar_2, \ldots, ar_{\phi(n)}\}$ is also a RRS modulo $n$
+	\end{itemize}
+
+
+	\subsection{Wilson's Theorem}
+	$(p-1)! \equiv -1 \pmod{p}$ iff $p$ is prime.
+
+	\subsection{Euler's Theorem}
+	\begin{itemize}
+		\item If $\gcd(a,n) = 1$, then $a^{\phi(n)} \equiv 1 \Mod{n}$, where $\phi(n)$ is Euler's totient function.
+		\item If $p$ is prime and $p \nmid a$, then $a^{p-1} \equiv 1 \Mod{p}$
+	\end{itemize}
+
+
+
+	\section{Solving System of Congruences}
+
+	\subsection{Chinese Remainder Theorem (CRT)}
+	For general systems:
+	\begin{align*}
+		x & \equiv a_1 \Mod{m_1} \\
+		x & \equiv a_2 \Mod{m_2} \\
+		  & \vdots               \\
+		x & \equiv a_k \Mod{m_k}
+	\end{align*}
+	where $\gcd(m_i, m_j) = 1$ for $i \neq j$:
+
+	\begin{enumerate}
+		\item Let $M = m_1m_2\cdots m_k$
+		\item Let $M_i = M/m_i$
+		\item Find $M_i^{-1}$ such that $M_i \cdot M_i^{-1} \equiv 1 \Mod{m_i}$
+		\item The solution is $x \equiv \sum_{i=1}^{k} a_i M_i M_i^{-1} \Mod{M}$
+	\end{enumerate}
+
+	\subsection{Solving Linear Congruences}
+	For $ax \equiv b \Mod{m}$:
+	\begin{itemize}[leftmargin=*]
+		\item Has a solution if and only if $\gcd(a,m) | b$
+		\item If $\gcd(a,m) = 1$, there is a unique solution modulo $m$
+		\item If $\gcd(a,m) = d > 1$ and $d | b$, there are $d$ distinct solutions modulo $m$
+	\end{itemize}
+
+	\subsection{Primitive Roots}
+	\begin{itemize}[leftmargin=*]
+		\item An integer $g$ is a \textbf{primitive root} modulo $n$ if $\ord_n(g) = \phi(n)$
+		\item \textbf{Theorem:} Primitive roots exist modulo $n$ iff $n = 1, 2, 4, p^k, 2p^k$ for odd prime p	\end{itemize}
+
+	\subsection{Solving $x^m = c \pmod{n}$}
+	\begin{enumerate}
+		\item Break into system of equations modulo various prime powers
+		\item Solve the ones with odd prime powers $p^k$ with primitive roots
+		\item Every integer modulo $2^k$ can be written uniquely as $\pm 5^j$ for $0 \leq j < 2^{k-2}$
+		\item Glue solutions with CRT.
+	\end{enumerate}
+
+	\subsection{Hensel's Lifting Lemma}
+
+	Given $a_k$ with $f(a_k) \equiv 0 \pmod{p^k}$, compute:
+	\begin{align*}
+		a_{k+1} & = a_k - \frac{f(a_k)}{p^k} \cdot (f'(a_k))^{-1} \cdot p^k \pmod{p^{k+1}}
+	\end{align*}
+
+	\section{Quadratic Residues}
+
+	\subsection{Properties of Quadratic Residues}
+	For an odd prime $p$ and integer $a$ with $\gcd(a,p) = 1$:
+	\begin{itemize}[leftmargin=*]
+		\item $a \in \QR(p^e)$ if and only if $a \in \QR(p)$ for any $e \geq 1$
+		\item $\QR(p) = \{1^2, 2^2, \ldots, (\frac{p-1}{2})^2\}$
+		\item $\QR(p) = \{u^{2k}: k \in \mathbb{Z}\}$ where $u$ is a primitive root
+	\end{itemize}
+
+	\subsection{Legendre Symbol}
+	For an odd prime $p$ and integer $a$:
+	\begin{align*}
+		\left(\frac{a}{p}\right) =
+		\begin{cases}
+			1  & \text{if } a \text{ is a QR modulo } p  \\
+			-1 & \text{if } a \text{ is a NQR modulo } p \\
+			0  & \text{if } p | a
+		\end{cases}
+	\end{align*}
+
+	\subsection{Properties of Legendre Symbol}
+	\begin{itemize}[leftmargin=*]
+		\item $\left(\frac{a}{p}\right) \equiv a^{\frac{p-1}{2}} \Mod{p}$ (Euler's Criterion)
+		\item $\left(\frac{ab}{p}\right) = \left(\frac{a}{p}\right) \left(\frac{b}{p}\right)$ (Multiplicative)
+	\end{itemize}
+
+	\subsection{Quadratic Reciprocity}
+	For distinct odd primes $p$ and $q$:
+	\begin{align*}
+		\left(\frac{p}{q}\right) \left(\frac{q}{p}\right) = (-1)^{\frac{(p-1)(q-1)}{4}}
+	\end{align*}
+	i.e., they are equal when both $p, q = 3 \pmod{4}$.
+
+	\begin{align*}
+		\left(\frac{-1}{p}\right) & = (-1)^{\frac{p-1}{2}} =
+		\begin{cases}
+			1  & \text{if } p \equiv 1 \Mod{4} \\
+			-1 & \text{if } p \equiv 3 \Mod{4}
+		\end{cases}                     \\
+		\left(\frac{2}{p}\right)  & = (-1)^{\frac{p^2-1}{8}} =
+		\begin{cases}
+			1  & \text{if } p \equiv 1, 7 \Mod{8} \\
+			-1 & \text{if } p \equiv 3, 5 \Mod{8}
+		\end{cases}
+	\end{align*}
+
+	\section{Pythagorean Triples}
+
+	\subsection{Definition}
+	A Pythagorean triple is a set of three positive integers $(a,b,c)$ satisfying $a^2 + b^2 = c^2$.
+	A primitive Pythagorean triple has $\gcd(a,b,c) = 1$.
+
+
+	\subsection{Parametrization of Primitive Pythagorean Triples}
+	All primitive Pythagorean triples $(a,b,c)$ can be generated by:
+	\begin{align*}
+		a & = s^2 - t^2 \\
+		b & = 2st       \\
+		c & = s^2 + t^2
+	\end{align*}
+	where $s > t > 0$, $\gcd(s,t) = 1$, and $s$ and $t$ have opposite parity (one even, one odd).
+
+	\subsection{Chord-and-Tangent Method}
+	We observe that finding integer solutions to $a^2 + b^2 = c^2$ is equivalent to finding rational points on $x^2 + y^2 = 1$.
+	\begin{itemize}[leftmargin=*]
+		\item Pick an (obvious) rational point $P$ (e.g., $(1,0)$ for the unit circle).
+		\item Draw a secant line with rational slope through this point
+		\item Find the second intersection with the conic
+		\item This gives a parametrization of all rational points
+		      \[(x, y) \rightarrow \left(\frac{s^2 - t^2}{s^2 + t^2}, \frac{2st}{s^2 + t^2}\right)\]
+	\end{itemize}
+
+	\subsection{Congruent Numbers}
+	\begin{itemize}[leftmargin=*]
+		\item A positive rational number $n$ is a \textbf{congruent number} if it is the area of a right triangle with rational sides
+		\item Equivalently, $n$ is congruent if and only if the elliptic curve $y^2 = x^3 - n^2x$ has a rational point with $y \neq 0$
+		      \begin{align*}
+			      (a, b, c) & \rightarrow (\frac{nb}{c-a}, \frac{2n^2}{c-a}) \\ \quad (\frac{x^2-n^2}{y}, \frac{2nx}{y}, \frac{x^2+n^2}{y}) &\leftarrow (x,y)
+		      \end{align*}
+	\end{itemize}
+
+	\subsection{Congruum Numbers}
+	\begin{itemize}[leftmargin=*]
+		\item $n$ is congruum if there exists $x\in\mathbb{Z}$ such that $x^2 - n, x^2, x^2 + n$ are all square numbers
+		      \begin{align*}
+			      (a, b, c)      & \rightarrow (\frac{b-a}{2}, \frac{c}{2}, \frac{b + a}{2}) \\
+			      (t-r, t+r, 2s) & \leftarrow (r, s, t)
+		      \end{align*}
+	\end{itemize}
+
+	\section{Pell's Equations and Continued Fractions}
+
+	\subsection{Pell's Equation}
+	\begin{itemize}[leftmargin=*]
+		\item Standard form: $x^2 - dy^2 = 1$ where $d$ is a positive non-square integer
+		\item Generalized form: $x^2 - dy^2 = n$ for $n \neq 0$
+		\item If $(x_1, y_1)$ is the smallest positive solution to $x^2 - dy^2 = 1$, then all solutions are given by $(x_k, y_k)$ where:
+		      \begin{align*}
+			      x_k + y_k\sqrt{d} = (x_1 + y_1\sqrt{d})^k
+		      \end{align*}
+	\end{itemize}
+
+	\subsection{Continued Fractions}
+	Simple continued fraction: $[a_0; a_1, a_2, \ldots] = a_0 + \frac{1}{a_1 + \frac{1}{a_2 + \ldots}}$
+
+	\subsection{Continued Fraction of $\sqrt{d}$}
+	\begin{itemize}[leftmargin=*]
+		\item For a non-square integer $d > 0$, $\sqrt{d} = [a_0; \overline{a_1, a_2, \ldots, a_n}]$ (periodic)
+		\item $a_0 = \lfloor \sqrt{d} \rfloor$
+		\item Process for finding continued fraction:
+		      \begin{align*}
+			      \alpha_0     & = \sqrt{d}                     \\
+			      a_0          & = \lfloor \alpha_0 \rfloor     \\
+			      \alpha_{i+1} & = \frac{1}{\alpha_i - a_i}     \\
+			      a_{i+1}      & = \lfloor \alpha_{i+1} \rfloor
+		      \end{align*}
+	\end{itemize}
+
+	\subsection{Convergents}
+	\begin{itemize}[leftmargin=*]
+		\item The $n$-th convergent of $[a_0; a_1, \ldots]$ is $\frac{p_n}{q_n}$ where:
+		      \begin{align*}
+			      p_0 & = a_0, \quad p_1 = a_0a_1 + 1, \quad p_n = a_np_{n-1} + p_{n-2} \\
+			      q_0 & = 1, \quad q_1 = a_1, \quad q_n = a_nq_{n-1} + q_{n-2}
+		      \end{align*}
+		\item Properties:
+		      \begin{align*}
+			      p_nq_{n-1} - p_{n-1}q_n                   & = (-1)^{n-1}                    \\
+			      \frac{p_n}{q_n} - \frac{p_{n-1}}{q_{n-1}} & = \frac{(-1)^{n-1}}{q_nq_{n-1}}
+		      \end{align*}
+		\item For an irrational $\alpha = [a_0; a_1, \ldots]$:
+		      \begin{align*}
+			      \frac{p_{2k}}{q_{2k}} > \alpha > \frac{p_{2k+1}}{q_{2k+1}}
+		      \end{align*}
+		      That is, even-indexed convergents approach $\alpha$ from above (decreasing), while odd-indexed convergents approach from below (increasing).
+	\end{itemize}
+
+	\subsection{Approximation by Convergents}
+	\begin{itemize}[leftmargin=*]
+		\item For any irrational $\alpha$, there exist infinitely many rational numbers $\frac{p}{q}$ such that:
+		      \begin{align*}
+			      \left|\alpha - \frac{p}{q}\right| < \frac{1}{2q^2}
+		      \end{align*}
+		      Then, $\frac{p}{q}$ must be a continued fraction convergent of $\alpha$.
+		\item Hurwitz's Theorem: For any irrational number $\alpha$, there exist infinitely many rational numbers $\frac{p}{q}$ such that:
+		      \begin{align*}
+			      \left|\alpha - \frac{p}{q}\right| < \frac{1}{\sqrt{5}q^2}
+		      \end{align*}
+		      This bound is sharp, as demonstrated by the golden ratio $\varphi = \frac{1+\sqrt{5}}{2}$.
+	\end{itemize}
+
+	\subsection{Solving Pell's Equation Using Continued Fractions}
+	\begin{itemize}[leftmargin=*]
+		\item For $x^2 - dy^2 = 1$:
+		      \begin{itemize}
+			      \item If the period length of $\sqrt{d}$ is even, the fundamental solution is $(p_{n-1}, q_{n-1})$ where $n$ is the period length
+			      \item If the period length is odd, the fundamental solution is $(p_{2n-1}, q_{2n-1})$
+		      \end{itemize}
+		\item For $x^2 - dy^2 = -1$:
+		      \begin{itemize}
+			      \item Has a solution if and only if the period length of $\sqrt{d}$ is odd
+			      \item The fundamental solution is $(p_{n-1}, q_{n-1})$ where $n$ is the period length
+		      \end{itemize}
+	\end{itemize}
+
+	\subsection{Examples}
+	\begin{itemize}[leftmargin=*]
+		\item $\sqrt{2} = [1; \overline{2}]$
+		      \begin{itemize}
+			      \item Convergents: $\frac{1}{1}, \frac{3}{2}, \frac{7}{5}, \frac{17}{12}, \ldots$
+			      \item Fundamental solution to $x^2 - 2y^2 = 1$: $(3, 2)$
+		      \end{itemize}
+		\item $\sqrt{7} = [2; \overline{1, 1, 1, 4}]$
+		      \begin{itemize}
+			      \item Fundamental solution to $x^2 - 7y^2 = 1$: $(8, 3)$
+		      \end{itemize}
+	\end{itemize}
+	\subsection{Solving Generalized Pell's Equations}
+	\textbf{Theorem:} For $x^2 - dy^2 = n$ where $n \neq 0$:
+	\begin{enumerate}
+		\item Find the fundamental solution $(a, b)$ to $x^2 - dy^2 = 1$ where $a, b > 0$
+		\item Define $u = a + b\sqrt{d}$
+		\item Every integral solution is of the form $(x_k, y_k)$ where:
+		      \begin{align*}
+			      x_k + y_k\sqrt{d} = (x_0 + y_0\sqrt{d})u^k, \quad k \in \mathbb{Z}
+		      \end{align*}
+		      where $(x_0, y_0)$ is a solution satisfying the bounds:
+		      \begin{align*}
+			      |x_0| & \leq \sqrt{|n|}\cdot\frac{\sqrt{u} + \frac{1}{\sqrt{u}}}{2}         \\
+			      |y_0| & \leq \sqrt{|n|}\cdot\frac{\sqrt{u} - \frac{1}{\sqrt{u}}}{2\sqrt{d}}
+		      \end{align*}
+	\end{enumerate}
+
+	\section{Binary Quadratic Forms}
+
+	\subsection{Definition}
+	A binary quadratic form (BQF) is $f(x,y) = ax^2 + bxy + cy^2$ where $a,b,c \in \mathbb{Z}$.
+
+	\subsection{Discriminant}
+	The discriminant of $f(x,y) = ax^2 + bxy + cy^2$ is $\Delta = b^2 - 4ac$.
+
+	\subsection{Representation of Integers}
+	\begin{itemize}[leftmargin=*]
+		\item $n$ is represented by $f$ if there exist integers $x,y$ such that $f(x,y) = n$
+		\item $n$ is properly represented if $\gcd(x,y) = 1$
+		\item  If $n$ is a nonzero integer, then there exists a BQF of $\Delta$ that properly represents $n$ iff $\Delta$ is a QR mod $4|n|$.
+		\item  If $p$ is an odd prime, then there exists a BQF of $\Delta$ that represents $p$ iff $\Delta$ is a quadratic residue modulo $p$.
+	\end{itemize}
+
+	\subsection{Reduced Forms}
+	A positive definite form $f(x,y) = ax^2 + bxy + cy^2$ is reduced if:
+	\begin{itemize}[leftmargin=*, nosep]
+		\item $|b| \leq a \leq c$
+		\item If $|b| = a$ or $a = c$, then $b \geq 0$
+	\end{itemize}
+
+	\textbf{Key Properties:} For reduced form $(a,b,c)$ with discriminant $\Delta$:
+	\begin{itemize}[leftmargin=*, nosep]
+		\item $\Delta < 0 \Rightarrow a,c$ have same sign and $|a| \leq \sqrt{-\Delta/3}$
+		\item $\Delta > 0 \Rightarrow a,c$ have opposite signs and $|a| < \sqrt{\Delta/2}$
+		\item Every $\text{SL}_2(\mathbb{Z})$ orbit contains at least one reduced form
+		\item The reduced form is only unique if $\Delta < 0$.
+		\item $S_\Delta$ contains finitely many equivalence classes of forms
+	\end{itemize}
+	\subsection{Reduction Algorithm}
+	To reduce a form $(a,b,c)$ with discriminant $\Delta$:
+	\begin{itemize}[leftmargin=*, nosep]
+		\item Use transformations represented by matrices:
+		      \begin{align*}
+			      S   & = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}: (a,b,c) \mapsto (c,-b,a)             \\
+			      T^m & = \begin{pmatrix} 1 & m \\ 0 & 1 \end{pmatrix}: (a,b,c) \mapsto (a, b+2am, am^2+bm+c)
+		      \end{align*}
+		\item Reduction steps:
+		      \begin{enumerate}[nosep]
+			      \item If $b \notin (-|a|, |a|]$: apply $T^m$ with $m = -\lfloor \frac{b}{2a} \rfloor$
+			      \item If $b < 0$ or $|c| < |a|$: apply $S$
+		      \end{enumerate}
+	\end{itemize}
+
+
+	\subsection{Dirichlet Composition}
+	\begin{itemize}[leftmargin=*, nosep]
+		\item For primitive forms $f_1=(a_1,b_1,c_1)$ and $f_2=(a_2,b_2,c_2)$ with same discriminant $\Delta$ and $\gcd(a_1,a_2,\frac{b_1+b_2}{2})=1$, their composition $f_3=(a_3,b_3,c_3)$ is defined by:
+		      \begin{align*}
+			      a_3 & = a_1a_2                                               \\
+			      b_3 & \equiv b_1 \pmod{2a_1}, \, b_3 \equiv b_2 \pmod{2a_2}, \\ b_3^2 &\equiv \Delta \pmod{4a_1a_2} \\
+			      c_3 & = \frac{b_3^2-\Delta}{4a_3}
+		      \end{align*}
+		\item The class number $h(\Delta)$ is the number of equivalence classes of primitive forms with discriminant $\Delta$
+		\item $\text{Cl}(\Delta)$ forms a finite abelian group under composition
+		\item For $\Delta < 0$, order of $\text{Cl}(\Delta)$ is $h(\Delta)$
+	\end{itemize}
+
+\end{multicols}
+
+\end{document}
